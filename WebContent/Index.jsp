@@ -6,17 +6,18 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <%@ include file="bootstraplinks.html"%>
+<%@ include file="navbar.jsp"%>
 </head>
 <body>
 <div class="row">
     <div class="col-3"></div>
-    <div class="col-6">
-    		<div class="card">
+<div class="col-6 p-5">
+ <div class="card">
   <div class="card-header">
     Login
   </div>
   <div class="card-body">
-    <form action="Register" method="post">
+    <form action="login" method="post">
 		  <div class="form-group">
 		    <label>Username</label>
 		    <input type="text" class="form-control" placeholder="Enter username" name="username">
@@ -32,6 +33,5 @@
     </div>
     <div class="col-3"></div>
 </div>
-
 </body>
 </html>
