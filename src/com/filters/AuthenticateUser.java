@@ -12,6 +12,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.database.UserDao;
+
 /**
  * Servlet Filter implementation class AuthenticateUser
  */
@@ -29,12 +31,19 @@ public class AuthenticateUser implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
-		if((username != null && username.equals("shubam")) && (password!=null && password.equals("1234"))) {
+		boolean authenticate=false;
+		try {
+			authenticate = new UserDao().authenticate(username, password);
+		} catch (Exception e) {
+			System.out.println("Error in database");
+		}
+		if(authenticate) {
 			chain.doFilter(request, response);
 		}
 		else {
-			res.sendRedirect("Index.jsp");
+			res.sendRedirect("Index.jsp?authenticate=fail");
 		}
+		
 	}
 
 	@Override
