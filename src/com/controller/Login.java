@@ -18,6 +18,7 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession httpSession = request.getSession();
 		httpSession.setAttribute("username", request.getParameter("username"));
+		httpSession.setAttribute("password", request.getParameter("password"));
 		response.sendRedirect("Welcome.jsp");
 	}
 

@@ -1,3 +1,5 @@
+<%@page import="com.pojo.User"%>
+<%@page import="com.database.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,9 +13,10 @@
 <body>
 <%
 	String username = (String)session.getAttribute("username");
-	if(username == null){
-		response.sendRedirect("Index.jsp");
-	}
+    String password = (String)session.getAttribute("password");
+    if(username==null){
+    	response.sendRedirect("Index.jsp");
+    }
 %>
 <div class="p-5">
 <%
@@ -32,30 +35,54 @@ if((addvar!=null)&&(addvar.equals("success"))){
 </div>
 <div class="container p-5">
   <div class="row">
+  <%UserDao userDao = new UserDao();
+      User user = userDao.getUser(username, password);
+    %>
+    <%
+      if((user.getRole()!=null)&&(user.getRole().equals("admin"))){
+    %>
     <div class="col">
-      <div class="card" style="width: 18rem;">
+      <div class="card mx-auto" style="width: 20rem;">
 		  <img src="https://revcycleintelligence.com/images/site/features/_normal/rural_hospital.png" height="200" width="400" class="card-img-top" alt="...">
 		  <div class="card-body">
 		  	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addhospital">Add Hospital</button>
+		  	<a href="viewhospital" class="btn btn-primary" role="button">View Hospitals</a>
 		  </div>
 	  </div>
     </div>
+    <%
+	 }
+	%>
+	<%
+      if((user.getRole()!=null)&&((user.getRole().equals("admin"))||(user.getRole().equals("hospital")))){
+    %>
     <div class="col">
-      <div class="card" style="width: 18rem;">
+      <div class="card mx-auto" style="width: 20rem;">
 		  <img src="https://mdxvitals-res.cloudinary.com/image/upload/q_auto/f_auto/w_550,dpr_auto/v1539099898/homepage_vector_doctors-02.png" height="200" width="400" class="card-img-top" alt="...">
 		  <div class="card-body">
 		    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adddoctor">Add Doctor</button>
+		  	<a href="viewdoctor" class="btn btn-primary" role="button">View Doctors</a>
 		  </div>
 	  </div>
     </div>
+    <%
+	 }
+	%>
+	<%
+      if((user.getRole()!=null)&&((user.getRole().equals("admin"))||(user.getRole().equals("doctor"))||(user.getRole().equals("hospital")))){
+    %>
     <div class="col">
-      <div class="card" style="width: 18rem;">
+      <div class="card mx-auto" style="width: 20rem;">
 		  <img src="https://aemstatic-ww2.azureedge.net/content/dam/diq/online-articles/2016/06/happy-dental-patients.jpg.scale.LARGE.jpg" class="card-img-top" alt="..." height="200" width="400">
 		  <div class="card-body">
 		    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addpatient">Add Patient</button>
+		  	<a href="viewpatient" class="btn btn-primary" role="button">View Patients</a>
 		  </div>
 	  </div>
     </div>
+    <%
+	 }
+	%>
   </div>
 </div>
 
